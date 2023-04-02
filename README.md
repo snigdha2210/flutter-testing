@@ -31,5 +31,5 @@ flutter pub get
 - test:
 
 ```bash
-flutter test test/widget_test.dart
+flutter test test/main_test.dart
 ```
