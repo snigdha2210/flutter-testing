@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hello_flutter/home_page.dart';
+import 'package:hello_flutter/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,33 +47,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final routes = <String, WidgetBuilder>{
+    LoginPage.tag: (context) => LoginPage(),
+    HomePage.tag: (context) => HomePage(),
+  };
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'logo.png',
-                width: 40,
-              ),
-              Container(
-                child: Text(
-                  'Flutter App',
-                  style: TextStyle(
-                      color: Color.fromRGBO(27, 169, 76, 1),
-                      fontWeight: FontWeight.w700),
-                ),
-                margin: EdgeInsets.fromLTRB(10, 5, 5, 5),
-              )
-            ],
-          ),
-        ),
-        centerTitle: true,
+    return MaterialApp(
+      title: 'Kodeversitas',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+        fontFamily: 'Nunito',
       ),
+      home: LoginPage(),
+      routes: routes,
     );
   }
 }
