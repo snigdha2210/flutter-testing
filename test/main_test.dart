@@ -1,20 +1,141 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:hello_flutter/main.dart';
 
 void main() {
-  group('Widget Tests', () {
-    testWidgets('This is a flutter app', (WidgetTester tester) async {
+  group('main', () {
+    testWidgets('No error occurs when we enter both Username and Password',
+        (WidgetTester tester) async {
+      // Build our app and trigger a frame.
       await tester.pumpWidget(const MyApp());
-      expect(find.text('Flutter App'), findsOneWidget);
+
+      // Find Password TextFormField.
+      final usernameField = find.ancestor(
+        of: find.text('Username'),
+        matching: find.byType(TextFormField),
+      );
+      final passwordField = find.ancestor(
+        of: find.text('Password'),
+        matching: find.byType(TextFormField),
+      );
+
+      // Enter 'username' and 'password' into the Username and Password TextFormFields.
+      await tester.enterText(usernameField, 'username');
+      await tester.enterText(passwordField, 'password');
+
+      // Tap the Login Button.
+      await tester.tap(find.byType(ElevatedButton));
+
+      // Rebuild the widget after the state has changed.
+      await tester.pump();
+
+      // Expect to find the item on screen.
+      expect(find.text('Username is required'), findsNothing);
+      expect(find.text('Password is required'), findsNothing);
+    });
+    testWidgets(
+        'Username and Password error occur when we enter nothing for Username and Password',
+        (WidgetTester tester) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      final usernameField = find.ancestor(
+        of: find.text('Username'),
+        matching: find.byType(TextFormField),
+      );
+      final passwordField = find.ancestor(
+        of: find.text('Password'),
+        matching: find.byType(TextFormField),
+      );
+
+      // Enter 'username' and 'password' into the Username and Password TextFormFields.
+      await tester.enterText(usernameField, '');
+      await tester.enterText(passwordField, '');
+
+      // Tap the Login Button.
+      await tester.tap(find.byType(ElevatedButton));
+
+      // Rebuild the widget after the state has changed.
+      await tester.pump();
+
+      // Expect to find the item on screen.
+      expect(find.text('Username is required'), findsOneWidget);
+      expect(find.text('Password is required'), findsOneWidget);
+    });
+
+    // tearDown(() {
+    //   print('Shared tearDown');
+    // });
+    // setUp(() {
+    //   print('Shared setup');
+    // });
+
+    testWidgets('Username error occurs when we enter nothing for Username',
+        (WidgetTester tester) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Find Password TextFormField.
+      final passwordField = find.ancestor(
+        of: find.text('Password'),
+        matching: find.byType(TextFormField),
+      );
+      final usernameField = find.ancestor(
+        of: find.text('Username'),
+        matching: find.byType(TextFormField),
+      );
+
+      // Enter 'password' into the Password TextFormField.
+      await tester.enterText(passwordField, 'password');
+      await tester.enterText(usernameField, '');
+
+      // Tap the Login Button.
+      await tester.tap(find.byType(ElevatedButton));
+
+      // Rebuild the widget after the state has changed.
+      await tester.pump();
+
+      // Expect to find the item on screen.
+      expect(find.text('Username is required'), findsOneWidget);
+      expect(find.text('Password is required'), findsNothing);
+    });
+
+    testWidgets('Password error occurs when we enter nothing for Password',
+        (WidgetTester tester) async {
+      // Build our app and trigger a frame.
+      await tester.pumpWidget(const MyApp());
+
+      // Find Password TextFormField.
+      final usernameField = find.ancestor(
+        of: find.text('Username'),
+        matching: find.byType(TextFormField),
+      );
+      final passwordField = find.ancestor(
+        of: find.text('Password'),
+        matching: find.byType(TextFormField),
+      );
+
+      // Enter 'username' into the username TextFormField.
+      await tester.enterText(usernameField, 'username');
+      await tester.enterText(passwordField, '');
+      // await tester.sendKeyDownEvent(LogicalKeyboardKey.backspace);
+
+      // Tap the Login Button.
+      await tester.tap(find.byType(ElevatedButton));
+
+      // Rebuild the widget after the state has changed.
+      await tester.pump();
+
+      // Expect to find the item on screen.
+      expect(find.text('Password is required'), findsOneWidget);
+      expect(find.text('Username is required'), findsNothing);
     });
   });
+  // setUp(() async {
+  //   // Initialize the binding for testing.
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   // Reset the state.
+  //   TestWidgetsFlutterBinding.ensureInitialized().reset();
+  // });
 }

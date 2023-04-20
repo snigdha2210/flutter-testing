@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hello_flutter/home_page.dart';
 import 'package:hello_flutter/login_page.dart';
 
 void main() {
@@ -28,11 +27,11 @@ class MyApp extends StatelessWidget {
       },
     );
     return MaterialApp(
-      title: 'Flutter App',
+      title: 'Flutter Login Screen',
       theme: ThemeData(
         primarySwatch: mycolor,
       ),
-      home: const MyHomePage(title: 'Flutter App'),
+      home: const MyHomePage(title: 'Flutter Login Screen'),
     );
   }
 }
@@ -49,12 +48,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
-    HomePage.tag: (context) => HomePage(),
   };
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kodeversitas',
+      title: 'Flutter Login Screen',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,

@@ -27,9 +27,5 @@ class LoginController extends GetxController {
       loginItem.passwordError = '';
     }
     update();
-    print(loginItem.username);
-    print(loginItem.usernameError);
-    print(loginItem.password);
-    print(loginItem.passwordError);
   }
 }
